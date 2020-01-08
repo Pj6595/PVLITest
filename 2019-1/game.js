@@ -50,8 +50,7 @@ export default class Game extends Phaser.Scene {
       delay: 1000,
       callback: updateThings => {
         this.timeLeft--;
-        this.infoText.setText('Quedan ' + this.timeLeft + ' segundos y ' + this.collisionsLeft + ' colisiones');   
-        console.log(this.infoText.text);
+        this.updateUI();
       },
       args: [this.infoText],
       callBackscope: this,
@@ -61,6 +60,7 @@ export default class Game extends Phaser.Scene {
 
   addNewBalls(level, direction, speed, radius){
     this.collisionsLeft--;
+    this.updateUI();
     if(level < 3){
       this.balls.add(new Ball(this, this.player.x, (this.player.y - this.player.height*2), radius/2, {x: direction.x, y:-Math.abs(direction.y)}, speed, level+1));
       this.balls.add(new Ball(this, this.player.x, (this.player.y + this.player.height), radius/2, {x: direction.x, y:Math.abs(direction.y)}, speed, level+1));
@@ -83,6 +83,6 @@ export default class Game extends Phaser.Scene {
   }
 
   updateUI(){
-    
+    this.infoText.setText('Quedan ' + this.timeLeft + ' segundos y ' + this.collisionsLeft + ' colisiones');  
   }
 }
